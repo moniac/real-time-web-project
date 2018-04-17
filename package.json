@@ -5,6 +5,10 @@
 	"repository": "git@github.com:moniac/real-time-web-project.git",
 	"author": "Mohammed Mulazada <thisismoniac@gmail.com>",
 	"license": "MIT",
+	"scripts": {
+		"dev": "nodemon app.js",
+		"start": "node app.js"
+	},
 	"devDependencies": {
 		"dotenv": "^5.0.1"
 	},
