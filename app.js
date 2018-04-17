@@ -1,22 +1,41 @@
 const Twitter = require('twitter')
 const dotenv = require('dotenv').config()
+const { client, tokens } = require('./utils/twitter')
+const socketIO = require('socket.io')
+const http = require('http')
+const express = require('express')
+const app = express()
+const port = process.env.PORT || 3000
 
-const tokens = {
-	consumer_key: process.env.consumer_key,
-	consumer_secret: process.env.consumer_secret,
-	access_token: process.env.access_token,
-	access_token_key: process.env.access_token_key,
-	access_token_secret: process.env.access_token_secret
-}
+console.log(tokens)
 
-const client = new Twitter(tokens)
-
-client.stream('statuses/filter', { track: 'twitter' }, function(stream) {
-	stream.on('data', function(tweet) {
-		console.log(tweet.text)
-	})
-
-	stream.on('error', function(error) {
-		console.log(error)
-	})
+app.get('/', (req, res) => {
+	res.send('test')
 })
+
+app.listen(port, () => {
+	console.log(`Server is running ${port}`)
+})
+
+client.stream(
+	'statuses/filter',
+	{ track: 'twitter', tweet_mode: 'extended', language: 'en' },
+	function(stream) {
+		stream.on('data', function(tweet) {
+			// console.log(tweet.text, 1)
+			// console.log(tweet.text)
+			if (tweet.extended_tweet) {
+				const { full_text } = tweet.extended_tweet
+				// console.log(tweet)
+				console.log(full_text.split('https://t.co')[0])
+			}
+			// console.log(tweet)
+
+			// stream.destroy()
+		})
+
+		stream.on('error', function(error) {
+			console.log(error)
+		})
+	}
+)
