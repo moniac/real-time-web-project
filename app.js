@@ -19,15 +19,17 @@ app.listen(port, () => {
 
 client.stream(
 	'statuses/filter',
-	{ track: 'twitter', tweet_mode: 'extended', language: 'en' },
+	{ track: 'fortnite', tweet_mode: 'extended', language: 'en' },
 	function(stream) {
 		stream.on('data', function(tweet) {
-			// console.log(tweet.text, 1)
-			// console.log(tweet.text)
+			// console.log(tweet)
+
 			if (tweet.extended_tweet) {
 				const { full_text } = tweet.extended_tweet
-				// console.log(tweet)
-				console.log(full_text.split('https://t.co')[0])
+				console.log(full_text.split('https://t.co')[0], 1)
+				console.log('WOOOOOOOP')
+			} else if (!tweet.extended_tweet) {
+				console.log(tweet.text, 2)
 			}
 			// console.log(tweet)
 
