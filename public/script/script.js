@@ -87,16 +87,16 @@ var stream = new EventSource(`/${hashtag}`)
 
 stream.addEventListener(`${hashtag}`, function(event) {
 	const text = JSON.parse(event.data)
-	console.log(text)
+	// console.log(text)
 	const li = document.createElement('li')
 
 	li.className = 'tweet-card'
 	li.textContent = text.tweet
 
 	if (trainedNet) {
-		console.log('het komt hier wel')
+		// console.log('het komt hier wel')
 		result = trainedNet(encode(adjustSize(text.tweet)))
-		console.log(result[`${hashtag}`])
+		// console.log(result[`${hashtag}`])
 		li.style.backgroundColor = `hsl(${Math.floor(
 			result[`${hashtag}`] * 100
 		)},100%,30%)`
@@ -105,16 +105,15 @@ stream.addEventListener(`${hashtag}`, function(event) {
 	const container = document.querySelector('main section ul')
 
 	if (!text.tweet) {
-		console.log('empty')
+		// console.log('empty')
 		return
 	}
 
-	if (container.childElementCount > 20) {
-		console.log(container.childNodes[20])
-		container.childNodes[20].remove()
+	if (container.childElementCount > 10) {
+		// console.log(container.childNodes[10])
+		container.childNodes[10].remove()
 	}
 
 	container.prepend(li)
-	console.log(trainedNet)
 	return
 })

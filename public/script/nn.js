@@ -77,9 +77,15 @@ function train(data) {
 	trainedNet = net.toFunction()
 }
 
+// function encode(arg) {
+// 	return arg.split('').map(x => x.charCodeAt(0) / 400)
+// }
+
 function encode(arg) {
 	return arg.split('').map(x => x.charCodeAt(0) / 400)
 }
+
+var worker = cw(encode)
 
 function processTrainingData(data) {
 	const processedValues = data.map(d => {
@@ -88,7 +94,6 @@ function processTrainingData(data) {
 			output: d.output
 		}
 	})
-	console.log(processedValues)
 	return processedValues
 }
 
@@ -127,22 +132,22 @@ es.addEventListener(`${hashtag}`, function(event) {
 
 		tweets.push(obj)
 		h += 1
-		console.log(h)
+		// console.log(h)
 	} else {
 		tweets.push({
 			input: text.tweet,
 			output: { other: 1 }
 		})
 		o += 1
-		console.log(o)
+		// console.log(o)
 	}
 
-	if (o >= 1 && h >= 1) {
+	if (o >= 2 && h >= 2) {
 		if (trainedNet) {
 			return
 		}
-		console.log(tweets)
+		// console.log(tweets)
 		train(getTrainingData(tweets))
-		console.log(trainedNet(encode(adjustSize('the legend of zelda'))))
+		// console.log(trainedNet(encode(adjustSize('the legend of zelda'))))
 	}
 })
