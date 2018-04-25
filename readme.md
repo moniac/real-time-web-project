@@ -1,25 +1,76 @@
-# real-time-web-project
+# Real Time Web Project
 
-This repo will hold the project you're going to build during the last two weeks of RTW. It functions as a way to show you've attained the following learning goals of this course:
+## Buzzword alert, using ML
 
-* Build a Node Web App which consumes an external data source through an API and serves a frontend using routing and templating techniques.
-* Create a "live" web app which reflects changes to the back-end data model in reactive front-end views, using real-time, event-based, messaging technologies like sockets or server-sent-events.
-* Describe their work in a professional readme with insightful diagrams showing the life cycle of their data.
+![Robot AI](https://media.giphy.com/media/CVtNe84hhYF9u/giphy.gif)
 
-<!-- ☝️ replace this description -->
+## Table of Contents
 
-<!-- Add a nice image here at the end of the week, showing off your shiny frontend 📸 -->
+*   [Introduction](#introduction)
+*   [Getting Started](#getting-started)
+*   [Flowchart](#flowchart)
+*   [Checklist](#checklist)
+*   [Kudos](#kudos)
+*   [Licensing](#licensing)
 
-<!-- Maybe a table of contents here? 📚 -->
+---
 
-<!-- How about a section that describes how to install this project? 🤓 -->
+## Introduction
 
-<!-- ...but how does one use this project? What are its features 🤔 -->
+This project is a tool that can stream tweets filtered on a hashtag in real-time, while analyzing the tweets and comparing new tweets to the old tweets.
 
-<!-- What external data source is featured in your project and what are its properties 🌠 -->
+In short, it looks at new tweets and can analyse if the tweets are spam or not.
 
-<!-- Where do the 0️⃣s and 1️⃣s live in your project? What db system are you using?-->
+## Flowchart
 
-<!-- Maybe a checklist of done stuff and stuff still on your wishlist? ✅ -->
+![Chart describing the flow](chart.jpg)
 
-<!-- How about a license here? 📜 (or is it a licence?) 🤷 -->
+![Robot & Human high five](https://media.giphy.com/media/14cHY86AYr24o0/giphy.gif)
+
+---
+
+## Getting started
+
+To install this project, please do the usual git cloning and then;
+
+```sh
+yarn install
+```
+
+To run the app:
+
+```sh
+yarn run start
+```
+
+To start developing the app:
+
+```sh
+yarn run dev
+```
+
+The data comes straight from the Twitter api. The tweets are being sent to the client using Server Sent Events.
+
+This project does not use a database, the server is only used to manipulate and send data to the clients. In a future installment the analysing done by the clients can be sent back to the server as a JSON, so that the data can be trained heavily.
+
+## Checklist
+
+*   [x] Have this actually work
+*   [x] Add gifs to the readme
+*   [ ] Add styling (I'm sorry)
+*   [ ] Move intense functions to separate threads using web workers (need help on this one)
+*   [ ] Have a decent way to stop Twitter streams
+*   [ ] Decent way to stop SSE streams
+*   [x] Add another marked checkbox to feel better about myself
+*   [ ] Save brain.js state
+
+## Kudos
+
+Special thanks to the people that helped me out:
+
+[Brain.js issue](https://github.com/BrainJS/brain.js/issues/188)
+[Servin](https://www.github.com/servinlp)
+
+## Licensing
+
+This project uses the MIT license.
