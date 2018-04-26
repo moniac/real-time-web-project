@@ -4,11 +4,14 @@
 
 ![Robot AI](https://media.giphy.com/media/CVtNe84hhYF9u/giphy.gif)
 
+[This project is available here](https://real-time-web-project-rolwcddjdk.now.sh/hashtag?hashtag=trump)
+
 ## Table of Contents
 
 *   [Introduction](#introduction)
 *   [Getting Started](#getting-started)
 *   [Flowchart](#flowchart)
+*   [Data](#data)
 *   [Checklist](#checklist)
 *   [Kudos](#kudos)
 *   [Licensing](#licensing)
@@ -26,6 +29,71 @@ In short, it looks at new tweets and can analyse if the tweets are spam or not.
 ![Chart describing the flow](chart.jpg)
 
 ![Robot & Human high five](https://media.giphy.com/media/14cHY86AYr24o0/giphy.gif)
+
+---
+
+## Data
+
+Hashtags get sent through a form, where Node.js will get the value from the url.
+
+```javascript
+app.get('/hashtag', (req, res) => {
+	const { hashtag } = req.query
+	makeStream(hashtag)
+
+	res.render('./realtime/realtime')
+})
+```
+
+With this function, a path will be made where Node.js will send Server Sent Events to.
+
+```javascript
+function makeStream(hashtag) {
+	app.get(`/${hashtag}`, (req, res) => {
+		sse.init(req, res)
+		console.log(sse)
+	})
+```
+
+On the client side, the data will be subscribed to so the data can get passed to the client.
+
+```javascript
+const stream = new EventSource(`${hashtag}`)
+```
+
+The data will get parsed and then sent to Brain.js, where the data will get analyzed and the result will output the color.
+
+```javascript
+stream.addEventListener(`${hashtag}`, function(event) {
+	const text = JSON.parse(event.data)
+
+	const li = document.createElement('li')
+
+	li.className = 'tweet-card'
+	li.textContent = text.tweet
+
+	if (trainedNet) {
+		result = trainedNet(encode(adjustSize(text.tweet)))
+
+		li.style.backgroundColor = `hsl(${Math.floor(
+			result[`${hashtag}`] * 100
+		)},100%,30%)`
+	}
+
+	const container = document.querySelector('main section ul')
+
+	if (!text.tweet) {
+		return
+	}
+
+	if (container.childElementCount > 10) {
+		container.childNodes[10].remove()
+	}
+
+	container.prepend(li)
+	return
+})
+```
 
 ---
 
@@ -69,6 +137,7 @@ This project does not use a database, the server is only used to manipulate and 
 Special thanks to the people that helped me out:
 
 [Brain.js issue](https://github.com/BrainJS/brain.js/issues/188)
+
 [Servin](https://www.github.com/servinlp)
 
 ## Licensing
