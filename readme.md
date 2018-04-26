@@ -57,6 +57,8 @@ function makeStream(hashtag) {
 
 On the client side, the data will be subscribed to so the data can get passed to the client.
 
+This ensures that people will only see the content that is meant for them.
+
 ```javascript
 const stream = new EventSource(`${hashtag}`)
 ```
